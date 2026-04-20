@@ -110,3 +110,51 @@ themeToggle.addEventListener('click', () => {
 
 // Initialize theme on page load
 initializeTheme();
+
+// Mobile Menu Functionality
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
+// Toggle mobile menu
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenuBtn.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+});
+
+// Close mobile menu when a link is clicked
+mobileNavLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    mobileMenuBtn.classList.remove('active');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// Mobile theme toggle
+if (themeToggleMobile) {
+  themeToggleMobile.addEventListener('click', () => {
+    html.classList.toggle('light-mode');
+    const isLightMode = html.classList.contains('light-mode');
+    localStorage.setItem('theme-mode', isLightMode ? 'light' : 'dark');
+    
+    // Update button text
+    themeToggleMobile.innerHTML = isLightMode 
+      ? '<span class="text-sm">☀️ Light Mode</span>' 
+      : '<span class="text-sm">🌙 Dark Mode</span>';
+  });
+  
+  // Set initial theme button text
+  const isLightMode = html.classList.contains('light-mode');
+  themeToggleMobile.innerHTML = isLightMode 
+    ? '<span class="text-sm">☀️ Light Mode</span>' 
+    : '<span class="text-sm">🌙 Dark Mode</span>';
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+    mobileMenuBtn.classList.remove('active');
+    mobileMenu.classList.remove('open');
+  }
+});
